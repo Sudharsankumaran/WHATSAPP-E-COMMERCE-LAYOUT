@@ -1,0 +1,254 @@
+<!-- preview.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Cart</title>
+    <style>
+   /* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 100;
+    padding: 50;
+    background-color: #fef3d1; /* Light yellow background */
+}
+
+
+
+/* Cart styles */
+#cartItems {
+    list-style-type: none;
+    padding: 0;
+}
+
+#cartItems li {
+    margin-bottom: 10px;
+}
+
+/* Total amount styles */
+#totalAmount {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Address details styles */
+#addressDetails {
+    padding: 0px;
+    margin-top: 20px;
+    border-radius: 5px;
+   
+}
+
+#addressDetails p {
+    margin: 0 0 10px 0;
+}
+
+#addressDetails strong {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Preview Order styles */
+.screen {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+
+}
+
+.screen h1 {
+    margin-top: 0;
+}
+
+.screen p {
+    margin-bottom: 10px;
+}
+
+.screen span {
+    font-weight: bold;
+}
+
+/* Additional styles for alignment */
+h1.preview-order-heading {
+    margin-top: 30px;
+    margin-bottom: 20px; /* Added bottom margin */
+}
+
+p {
+    margin-top: 0;
+}
+
+/* Clear background color for specific elements */
+.screen {
+    background-color: transparent;
+}
+
+/* Adjust alignment */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.whatsapp-button {
+  display: inline-block;
+  background-color: #25D366; /* WhatsApp green color */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.whatsapp-button:hover {
+  background-color: #128C7E; /* Darker shade of WhatsApp green on hover */
+}
+
+.whatsapp-logo {
+  width: 20px; /* Adjust size as needed */
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Additional styles can be added as needed */
+
+    </style>
+</head>
+ <h1>Preview Cart</h1>
+    <ul id="cartItems">
+        <!-- Cart items will be dynamically added here -->
+    </ul>
+    <div id="totalAmount"></div>
+    
+    <h1>Preview Address Details</h1>
+    <div id="addressDetails"></div>
+
+    <h1 class="preview-order-heading">Preview Order</h1>
+    <p>Selected Payment Method: <span id="selectedPaymentMethod"></span></p>
+    <button class="whatsapp-button" onclick="confirmOrder()">
+        <img src="whatsapp-logo.png" alt="WhatsApp Logo" class="whatsapp-logo">
+        Confirm Order
+    </button>
+
+    <script>
+      // JavaScript code to display cart details and address details in the preview page
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart'));
+
+    // Function to display cart details
+    function displayCart() {
+        const cartItemsElement = document.getElementById('cartItems');
+        const totalAmountElement = document.getElementById('totalAmount');
+        let totalAmount = 0;
+
+        cartItemsElement.innerHTML = '';
+
+        cart.forEach(item => {
+            const listItem = document.createElement('li');
+            const itemName = document.createElement('span');
+            const itemPrice = document.createElement('span');
+
+            itemName.textContent = `${item.name} * Quantity (${item.quantity})`; // Modified display format
+            itemPrice.textContent = ` = ₹${(item.price * item.quantity).toFixed(2)}`; // Calculate total price for the item
+            listItem.appendChild(itemName);
+            listItem.appendChild(itemPrice);
+
+            cartItemsElement.appendChild(listItem);
+            totalAmount += item.price * item.quantity;
+        });
+
+        totalAmountElement.textContent = `Total: ₹${totalAmount.toFixed(2)}`;
+    }
+
+    // Display cart details
+    displayCart();
+
+    // Retrieve stored address details from localStorage
+    const addressDetails = JSON.parse(localStorage.getItem('addressDetails'));
+
+    // Function to display address details
+    function displayAddressDetails() {
+        const addressDetailsElement = document.getElementById('addressDetails');
+
+        // Create HTML content to display address details
+        const html = `
+            <p><strong>Name:</strong> ${addressDetails.name}</p>
+            <p><strong>Contact No:</strong> ${addressDetails.contact}</p>
+            <p><strong>Address:</strong> ${addressDetails.address}</p>
+            <p><strong>Pincode:</strong> ${addressDetails.pincode}</p>
+        `;
+
+        // Set HTML content in the addressDetailsElement
+        addressDetailsElement.innerHTML = html;
+    }
+
+    // Display address details
+    displayAddressDetails();
+
+    // Retrieve the selected payment method from the query parameter
+    var selectedPaymentMethod = getQueryParam('paymentMethod');
+
+    // Display the selected payment method
+    document.getElementById('selectedPaymentMethod').textContent = selectedPaymentMethod;
+});
+
+// Function to get query parameter by name
+function getQueryParam(name) {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    return urlSearchParams.get(name);
+}
+
+// Function to confirm order and send details to WhatsApp
+function confirmOrder() {
+    // Retrieve cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart'));
+
+    // Retrieve stored address details from localStorage
+    const addressDetails = JSON.parse(localStorage.getItem('addressDetails'));
+
+    // Retrieve the selected payment method from the query parameter
+    const selectedPaymentMethod = getQueryParam('paymentMethod');
+
+    // Prepare message including order details, address, and payment method
+    let orderDetails = 'Order Details:\n\n';
+    cart.forEach(item => {
+        orderDetails += `${item.name} * Quantity (${item.quantity}) = ₹${(item.price * item.quantity).toFixed(2)}\n`; // Modified display format
+    });
+    orderDetails += '\n';
+    orderDetails += 'Total Amount:\n';
+    orderDetails += `₹${calculateTotalAmount(cart).toFixed(2)}\n\n`; // Calculate total amount
+    orderDetails += 'Address Details:\n';
+    orderDetails += `Name: ${addressDetails.name}\n`;
+    orderDetails += `Contact No: ${addressDetails.contact}\n`;
+    orderDetails += `Address: ${addressDetails.address}\n`;
+    orderDetails += `Pincode: ${addressDetails.pincode}\n\n`;
+    orderDetails += `Payment Method: ${selectedPaymentMethod}`;
+
+    // Send order details to the company WhatsApp number
+    const whatsappNumber = '+918012609554';
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderDetails)}`;
+    window.open(whatsappLink);
+    
+    // Clear the cart after purchase
+    localStorage.removeItem('cart');
+    updateCart(); // Assuming you have an updateCart() function to reflect the cart changes
+}
+
+// Function to calculate total amount
+function calculateTotalAmount(cart) {
+    let totalAmount = 0;
+    cart.forEach(item => {
+        totalAmount += item.price * item.quantity;
+    });
+    return totalAmount;
+}
+
+    </script>
+</body>
+</html>

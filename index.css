@@ -1,0 +1,87 @@
+body {
+    background-color: #fef3d1; /* Light yellow background */
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.items {
+    width: 60%;
+}
+
+.item {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.price-info {
+    display: flex;
+}
+
+.price-info p {
+    margin: 0 2px;
+}
+
+.price-info del {
+    color: grey; /* Color for the strike-through rate */
+}
+
+.price-info span {
+    color: green; /* Color for the discount percentage */
+}
+
+
+.cart {
+    width: 30%;
+    background-color: #ffd700; /* Honey yellow */
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #ff9933; /* Orange */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+button:hover {
+    background-color: #ff6600; /* Darker orange on hover */
+}
+
+button {
+    padding: 10px 15px; /* Adjust padding */
+    margin: 5px 0px; /* Add margin between buttons */
+}
+
+
+.quantity-text {
+    background-color: white; /* Set background color to white */
+    padding: 7px 10px; /* Add padding */
+    border-radius: 4px; /* Add border-radius */
+    display: inline-block; /* Ensures the element takes up the space of its content */
+}
+
+.plus-minus-button {
+    padding: 7px 10px; /* Adjust padding for plus/minus buttons */
+    margin: 5px 0; /* Add margin between plus/minus buttons */
+}
+
+.plus-minus-button:hover {
+    background-color: #ff6600; /* Darker orange on hover */
+    color: #fff;
+}
+

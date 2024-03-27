@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        body.background {
+            background-color: #ffffff; /* White */
+            color: #000000; /* Dark grey */
+            font-family: Arial, sans-serif; /* Set a fallback font */
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Center content vertically */
+        }
+        .screen {
+            background-color: #ff6600; /* Orange */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Limit screen width */
+            width: 100%; /* Ensure screen fills container */
+            display: flex; /* Use flexbox layout */
+            flex-direction: column; /* Stack elements vertically */
+            align-items: flex-start; /* Align items to the left */
+        }
+        h1 {
+            color: #000000; /* Black */
+            font-size: 24px; /* Increase font size */
+            font-weight: bold; /* Set font weight to bold */
+            margin-bottom: 15px; /* Add spacing below heading */
+        }
+        p {
+            font-size: 20px; /* Set font size */
+            margin-top: 10px; /* Add spacing between elements */
+        }
+        label {
+            font-size: 18px; /* Set font size */
+            margin-left: 5px; /* Add spacing between radio button and label */
+            margin-right: 10px; /* Add spacing to the right of the label */
+        }
+        .button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start; /* Align button to the left */
+            margin-top: 10px; /* Increase top margin */
+            margin-left: 5px; /* Add margin for better spacing */
+        }
+        button {
+            background-color: #008000; /* Green */
+            color: #ffffff; /* White */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px; /* Increase top margin */
+            width: 50%; /* Make button full width */
+        }
+        button:hover {
+            background-color: #006400; /* Dark Green */
+        }
+    </style>
+</head>
+<body class="background">
+    <div class="container">
+        <div class="screen">
+            <h1>Payment</h1>
+            <p>Please select payment method:</p>
+            <label>
+                <input type="radio" id="cashOnDelivery" name="paymentMethod" value="cash">
+                Cash on Delivery
+            </label>
+            <!-- Other payment options if any -->
+            
+            <div class="button-container">
+                <button onclick="redirectToPreview()">Preview Order</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function redirectToPreview() {
+        // Get the selected payment method
+        var selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        
+        // Redirect to preview.html with selected payment method as a query parameter
+        window.location.href = 'preview.html?paymentMethod=' + encodeURIComponent(selectedPaymentMethod);
+    }
+    </script>
+        </div>
+    </div>
+</body>

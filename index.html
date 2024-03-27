@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honey Shop</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="items">
+            <div class="item">
+                <h3>Raw Honey</h3>
+                <p>Description: Pure, unprocessed honey from local bees.</p>
+                <div class="price-info">
+                    <p>₹100</p>
+                    <p><del>₹110</del></p>
+                    <p><span>10%</span></p>
+                </div>
+                              
+                <button onclick="addToCart('Raw Honey', 100, 10)">Add to Cart</button>
+            </div>
+            <div class="item">
+                <h3>Honeycomb</h3>
+                <p>Description: Fresh honeycomb harvested from beehives.</p>
+                <div class="price-info">
+                    <p>₹100</p>
+                    <p><del>₹110</del></p>
+                    <p><span>10%</span></p>
+                </div>
+                <button onclick="addToCart('Honeycomb', 200, 5)">Add to Cart</button>
+            </div>
+            <div class="item">
+                <h3>Honey Soap</h3>
+                <p>Description: Handmade soap enriched with natural honey.</p>
+                <div class="price-info">
+                    <p>₹100</p>
+                    <p><del>₹110</del></p>
+                    <p><span>10%</span></p>
+                </div>
+                <button onclick="addToCart('Honey Soap', 150, 8)">Add to Cart</button>
+            </div>
+        </div>
+        
+        <div class="cart">
+            <h2>Cart</h2>
+            <ul id="cartItems"></ul>
+            <p><span id="totalAmount"></span></p>
+            <button onclick="buy()">Buy</button>
+        </div>
+        
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
